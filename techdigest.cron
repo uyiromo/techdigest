@@ -1,0 +1,5 @@
+#/etc/cron.d/techdigest
+
+# every 1h
+# min hour day month weekday user command
+0 * * * * ${USER} ${COMMAND}

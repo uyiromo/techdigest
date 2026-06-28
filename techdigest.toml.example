@@ -1,0 +1,15 @@
+[openai]
+base_url = ""
+api_key = ""
+model = ""
+
+[slack]
+enabled = false
+app_token = "xapp-*****"
+bot_token = "xoxb-*****"
+channel_id = "C0*****"
+
+[discord]
+enabled = false
+token = "MTU*****"
+channel_id = ""

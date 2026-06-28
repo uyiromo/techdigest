@@ -1,0 +1,542 @@
+[
+  {
+    "name": "Amazon Web Service",
+    "url": "https://aws.amazon.com/jp/blogs/aws/feed/",
+    "url_parser": {
+      "type": "feed",
+      "args": {}
+    },
+    "meta_parser": {
+      "type": "general",
+      "args": {}
+    }
+  },
+  {
+    "name": "Google Developers Blog",
+    "url": "https://developers.googleblog.com/feeds/posts/default/?alt=rss",
+    "url_parser": {
+      "type": "feed",
+      "args": {}
+    },
+    "meta_parser": {
+      "type": "ld+json",
+      "args": {}
+    }
+  },
+  {
+    "name": "Google Research",
+    "url": "https://research.google/blog/rss/",
+    "url_parser": {
+      "type": "feed",
+      "args": {}
+    },
+    "meta_parser": {
+      "type": "general2",
+      "args": {}
+    }
+  },
+  {
+    "name": "Developers.IO",
+    "url": "http://dev.classmethod.jp/feed/",
+    "url_parser": {
+      "type": "feed",
+      "args": {}
+    },
+    "meta_parser": {
+      "type": "general2",
+      "args": {}
+    }
+  },
+  {
+    "name": "メルカリエンジニアリング",
+    "url": "https://engineering.mercari.com/blog/feed.xml",
+    "url_parser": {
+      "type": "feed",
+      "args": {}
+    },
+    "meta_parser": {
+      "type": "general",
+      "args": {}
+    }
+  },
+  {
+    "name": "さくらのナレッジ",
+    "url": "https://knowledge.sakura.ad.jp/feed/",
+    "url_parser": {
+      "type": "feed",
+      "args": {}
+    },
+    "meta_parser": {
+      "type": "general",
+      "args": {}
+    }
+  },
+  {
+    "name": "VOYAGE GROUP techblog",
+    "url": "https://techblog.cartaholdings.co.jp/rss",
+    "url_parser": {
+      "type": "feed",
+      "args": {}
+    },
+    "meta_parser": {
+      "type": "general",
+      "args": {}
+    }
+  },
+  {
+    "name": "LINEヤフー Tech Blog",
+    "url": "https://techblog.lycorp.co.jp/ja/feed/index.xml",
+    "url_parser": {
+      "type": "feed",
+      "args": {}
+    },
+    "meta_parser": {
+      "type": "general",
+      "args": {}
+    }
+  },
+  {
+    "name": "DeNA Engineers' Blog",
+    "url": "https://engineering.dena.com/index.xml",
+    "url_parser": {
+      "type": "feed",
+      "args": {}
+    },
+    "meta_parser": {
+      "type": "general",
+      "args": {}
+    }
+  },
+  {
+    "name": "GREE Engineer's Blog",
+    "url": "https://labs.gree.jp/blog/feed/",
+    "url_parser": {
+      "type": "feed",
+      "args": {}
+    },
+    "meta_parser": {
+      "type": "general",
+      "args": {}
+    }
+  },
+  {
+    "name": "CyberAgent Developers Blog",
+    "url": "https://developers.cyberagent.co.jp/blog/feed/",
+    "url_parser": {
+      "type": "feed",
+      "args": {}
+    },
+    "meta_parser": {
+      "type": "general2",
+      "args": {}
+    }
+  },
+  {
+    "name": "クックパッド開発者ブログ",
+    "url": "https://techlife.cookpad.com/rss",
+    "url_parser": {
+      "type": "feed",
+      "args": {}
+    },
+    "meta_parser": {
+      "type": "general",
+      "args": {}
+    }
+  },
+  {
+    "name": "はてな開発者ブログ",
+    "url": "https://developer.hatenastaff.com/rss",
+    "url_parser": {
+      "type": "feed",
+      "args": {}
+    },
+    "meta_parser": {
+      "type": "general",
+      "args": {}
+    }
+  },
+  {
+    "name": "FLINTERS 技術ブログ",
+    "url": "https://zenn.dev/p/flinters_blog/feed",
+    "url_parser": {
+      "type": "feed",
+      "args": {}
+    },
+    "meta_parser": {
+      "type": "general2",
+      "args": {}
+    }
+  },
+  {
+    "name": "ヌーラボブログ",
+    "url": "https://nulab.com/ja/feed/",
+    "url_parser": {
+      "type": "feed",
+      "args": {}
+    },
+    "meta_parser": {
+      "type": "general",
+      "args": {}
+    }
+  },
+  {
+    "name": "TECHSCORE BLOG",
+    "url": "https://blog.techscore.com/feed",
+    "url_parser": {
+      "type": "feed",
+      "args": {}
+    },
+    "meta_parser": {
+      "type": "general",
+      "args": {}
+    }
+  },
+  {
+    "name": "Wantedly Engineer Blog",
+    "url": "https://www.wantedly.com/stories/s/wantedly_engineers/rss.xml",
+    "url_parser": {
+      "type": "feed",
+      "args": {}
+    },
+    "meta_parser": {
+      "type": "general",
+      "args": {}
+    }
+  },
+  {
+    "name": "AI SHIFT TECH BLOG",
+    "url": "https://www.ai-shift.co.jp/techblog/feed",
+    "url_parser": {
+      "type": "feed",
+      "args": {}
+    },
+    "meta_parser": {
+      "type": "general",
+      "args": {}
+    }
+  },
+  {
+    "name": "Chatwork Creator's Note",
+    "url": "https://creators-note.chatwork.com/feed",
+    "url_parser": {
+      "type": "feed",
+      "args": {}
+    },
+    "meta_parser": {
+      "type": "general",
+      "args": {}
+    }
+  },
+  {
+    "name": "Gunosy Tech Blog",
+    "url": "https://tech.gunosy.io/rss",
+    "url_parser": {
+      "type": "feed",
+      "args": {}
+    },
+    "meta_parser": {
+      "type": "general",
+      "args": {}
+    }
+  },
+  {
+    "name": "LayerX エンジニアブログ",
+    "url": "https://tech.layerx.co.jp/feed",
+    "url_parser": {
+      "type": "feed",
+      "args": {}
+    },
+    "meta_parser": {
+      "type": "general",
+      "args": {}
+    }
+  },
+  {
+    "name": "LayerX Zenn",
+    "url": "https://zenn.dev/p/layerx/feed",
+    "url_parser": {
+      "type": "feed",
+      "args": {}
+    },
+    "meta_parser": {
+      "type": "general2",
+      "args": {}
+    }
+  },
+  {
+    "name": "Preferred Networks Research & Development Blog",
+    "url": "https://tech.preferred.jp/ja/feed/",
+    "url_parser": {
+      "type": "feed",
+      "args": {}
+    },
+    "meta_parser": {
+      "type": "general",
+      "args": {}
+    }
+  },
+  {
+    "name": "CARTA TECH BLOG",
+    "url": "https://techblog.cartaholdings.co.jp/feed",
+    "url_parser": {
+      "type": "feed",
+      "args": {}
+    },
+    "meta_parser": {
+      "type": "general",
+      "args": {}
+    }
+  },
+  {
+    "name": "ZOZO Technologies TECH BLOG",
+    "url": "https://techblog.zozo.com/rss",
+    "url_parser": {
+      "type": "feed",
+      "args": {}
+    },
+    "meta_parser": {
+      "type": "general",
+      "args": {}
+    }
+  },
+  {
+    "name": "ASKUL Engineering BLOG",
+    "url": "https://tech.askul.co.jp/feed",
+    "url_parser": {
+      "type": "feed",
+      "args": {}
+    },
+    "meta_parser": {
+      "type": "general",
+      "args": {}
+    }
+  },
+  {
+    "name": "エムスリーテックブログ",
+    "url": "https://www.m3tech.blog/feed",
+    "url_parser": {
+      "type": "feed",
+      "args": {}
+    },
+    "meta_parser": {
+      "type": "general",
+      "args": {}
+    }
+  },
+  {
+    "name": "Cybozu Inside Out",
+    "url": "https://blog.cybozu.io/rss",
+    "url_parser": {
+      "type": "feed",
+      "args": {}
+    },
+    "meta_parser": {
+      "type": "general",
+      "args": {}
+    }
+  },
+  {
+    "name": "BIGLOBE Style",
+    "url": "https://style.biglobe.co.jp/rss",
+    "url_parser": {
+      "type": "feed",
+      "args": {}
+    },
+    "meta_parser": {
+      "type": "general",
+      "args": {}
+    }
+  },
+  {
+    "name": "Future Tech Blog",
+    "url": "https://future-architect.github.io/atom.xml",
+    "url_parser": {
+      "type": "feed",
+      "args": {}
+    },
+    "meta_parser": {
+      "type": "general",
+      "args": {}
+    }
+  },
+  {
+    "name": "Money Forward Developers Blog",
+    "url": "https://moneyforward-dev.jp/feed",
+    "url_parser": {
+      "type": "feed",
+      "args": {}
+    },
+    "meta_parser": {
+      "type": "general",
+      "args": {}
+    }
+  },
+  {
+    "name": "GitLab Blog",
+    "url": "https://about.gitlab.com/atom.xml",
+    "url_parser": {
+      "type": "feed",
+      "args": {}
+    },
+    "meta_parser": {
+      "type": "general",
+      "args": {}
+    }
+  },
+  {
+    "name": "PLAID Engineer Blog",
+    "url": "https://tech.plaid.co.jp/rss.xml",
+    "url_parser": {
+      "type": "feed",
+      "args": {}
+    },
+    "meta_parser": {
+      "type": "general",
+      "args": {}
+    }
+  },
+  {
+    "name": "Timee Product Team Blog",
+    "url": "https://tech.timee.co.jp/feed",
+    "url_parser": {
+      "type": "feed",
+      "args": {}
+    },
+    "meta_parser": {
+      "type": "general",
+      "args": {}
+    }
+  },
+  {
+    "name": "スペースマーケット Engineer Blog",
+    "url": "https://zenn.dev/p/spacemarket/feed",
+    "url_parser": {
+      "type": "feed",
+      "args": {}
+    },
+    "meta_parser": {
+      "type": "general2",
+      "args": {}
+    }
+  },
+  {
+    "name": "Happy Elements",
+    "url": "https://zenn.dev/p/happy_elements/feed",
+    "url_parser": {
+      "type": "feed",
+      "args": {}
+    },
+    "meta_parser": {
+      "type": "general2",
+      "args": {}
+    }
+  },
+  {
+    "name": "Tabelog Tech Blog",
+    "url": "https://tech-blog.tabelog.com/feed",
+    "url_parser": {
+      "type": "feed",
+      "args": {}
+    },
+    "meta_parser": {
+      "type": "general",
+      "args": {}
+    }
+  },
+  {
+    "name": "Insight Edge Tech Blog",
+    "url": "https://techblog.insightedge.jp/feed",
+    "url_parser": {
+      "type": "feed",
+      "args": {}
+    },
+    "meta_parser": {
+      "type": "general",
+      "args": {}
+    }
+  },
+  {
+    "name": "freee Developers Hub",
+    "url": "https://developers.freee.co.jp/feed",
+    "url_parser": {
+      "type": "feed",
+      "args": {}
+    },
+    "meta_parser": {
+      "type": "general",
+      "args": {}
+    }
+  },
+  {
+    "name": "NTT DATA TECH",
+    "url": "https://zenn.dev/p/nttdata_tech/feed",
+    "url_parser": {
+      "type": "feed",
+      "args": {}
+    },
+    "meta_parser": {
+      "type": "general2",
+      "args": {}
+    }
+  },
+  {
+    "name": "サーバーワークスエンジニアブログ",
+    "url": "https://blog.serverworks.co.jp/feed",
+    "url_parser": {
+      "type": "feed",
+      "args": {}
+    },
+    "meta_parser": {
+      "type": "general",
+      "args": {}
+    }
+  },
+  {
+    "name": "VA Linux エンジニアブログ",
+    "url": "https://valinux.hatenablog.com/feed",
+    "url_parser": {
+      "type": "feed",
+      "args": {}
+    },
+    "meta_parser": {
+      "type": "general",
+      "args": {}
+    }
+  },
+  {
+    "name": "gihyo.jp",
+    "url": "https://gihyo.jp/feed/rss2",
+    "url_parser": {
+      "type": "feed",
+      "args": {}
+    },
+    "meta_parser": {
+      "type": "general",
+      "args": {}
+    }
+  },
+  {
+    "name": "Publickey",
+    "url": "https://www.publickey1.jp/atom.xml",
+    "url_parser": {
+      "type": "feed",
+      "args": {}
+    },
+    "meta_parser": {
+      "type": "general",
+      "args": {}
+    }
+  },
+  {
+    "name": "XenoSpectrum (technology)",
+    "url": "https://xenospectrum.com/feed.xml",
+    "url_parser": {
+      "type": "feed",
+      "args": {}
+    },
+    "meta_parser": {
+      "type": "general",
+      "args": {}
+    }
+  }
+]
