@@ -17,6 +17,8 @@ def url_parse(browser: Browser, url: str, parser: URLParser) -> list[str]:  # no
     match parser['type']:
         case URLParserType.Feed:
             urls = _url_parse_feed(browser, url)
+        case URLParserType.Selector:
+            urls = _url_parse_selector(browser, url, parser['args'])
         case _:
             raise ValueError(f'{parser["type"]} is UNKNOWN')
 
@@ -39,11 +41,11 @@ def _url_parse_selector(browser: Browser, url: str, args: dict) -> list[str]:
     selector: str = args['selector']
     attribute: str = args['attribute']
     exclude: set[str] = set(args['exclude'])
+    base: str | None = args.get('base', None)
 
     page: Page = browser.new_page()
     page.goto(url)
     page.goto(url)
-    print(page.content())
 
     loc: Locator = page.locator(selector)
     page_urls: list[str] = []
@@ -54,5 +56,10 @@ def _url_parse_selector(browser: Browser, url: str, args: dict) -> list[str]:
             page_urls.append(href)
         else:
             pass
+
+    if base:
+        page_urls = [base + href for href in page_urls]
+    else:
+        pass
 
     return page_urls

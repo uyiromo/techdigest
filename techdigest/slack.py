@@ -13,7 +13,7 @@ channel_id: str | None = None
 def init_slack(config: dict) -> None:
     global client, channel_id
 
-    if config['slack']['enabled']:
+    if 'slack' in config:
         headers = {'Authorization': f'Bearer {config["slack"]["bot_token"]}'}
         client = httpx.Client(headers=headers, timeout=10)
         channel_id = config['slack']['channel_id']

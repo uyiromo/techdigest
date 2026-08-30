@@ -19,25 +19,22 @@ base_url = ""
 api_key = ""
 model = ""
 
-[slack]
-enabled = false
-app_token = "xapp-*****"
-bot_token = "xoxb-*****"
-channel_id = "C0*****"
+# [slack]
+# app_token = "xapp-*****"
+# bot_token = "xoxb-*****"
+# channel_id = "C0*****"
 
-[discord]
-enabled = false
-token = "MTU*****"
-channel_id = ""
+# [discord]
+# token = "MTU*****"
+# channel_id = ""
 ```
 
 ## Slack 連携
 
-`[slack]` セクションを設定します。
+`[slack]` セクションを記述すると Slack 投稿が有効になります（セクション削除で無効）。
 
 | 項目         | 説明                                              |
 | ------------ | ------------------------------------------------- |
-| `enabled`    | `true` で Slack 投稿を有効化                      |
 | `app_token`  | Socket Mode 用アプリレベルトークン (`xapp-...`)   |
 | `bot_token`  | ボットトークン (`xoxb-...`)                       |
 | `channel_id` | 投稿先チャネル ID (`C...`)                        |
@@ -47,11 +44,10 @@ channel_id = ""
 
 ## Discord 連携
 
-`[discord]` セクションを設定します。
+`[discord]` セクションを記述すると Discord 投稿が有効になります（セクション削除で無効）。
 
 | 項目         | 説明                                  |
 | ------------ | ------------------------------------- |
-| `enabled`    | `true` で Discord 投稿を有効化        |
 | `token`      | ボットトークン                        |
 | `channel_id` | 投稿先チャネル ID                     |
 

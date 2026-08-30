@@ -65,7 +65,7 @@ def _extract_article(html: str) -> str:
 
 def digest(
     html_path: Path,
-) -> ArticleDigest:
+) -> ArticleDigest | None:
     if not (client and model):
         raise RuntimeError(f'LLM is not initialized: client="{client}", model="{model}"')
 
@@ -86,4 +86,5 @@ def digest(
             if attempt < 9:
                 sleep(5)
 
-    raise RuntimeError(f'Failed to digest after 10 attempts: {html_path}')
+    # raise RuntimeError(f'Failed to digest after 10 attempts: {html_path}')
+    return None

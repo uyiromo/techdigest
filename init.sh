@@ -6,8 +6,14 @@ WORKDIR="$(realpath "$(dirname "$0")")"
 export USER="$(id -un)"
 export COMMAND="cd ${WORKDIR} && ${HOME}/.local/bin/uv run ${WORKDIR}/main.py"
 
-sudo apt install gettext # envsubst
-envsubst <techdigest.cron | sudo tee /etc/cron.d/techdigest
+cat <<'__EOF__' | envsubst |
+#/etc/cron.d/techdigest
+
+# every 1h
+# min hour day month weekday user command
+0 * * * * ${USER} ${COMMAND}
+__EOF__
+sudo tee /etc/cron.d/techdigest
 
 # install browsers
 uv sync

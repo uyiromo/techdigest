@@ -1,5 +1,17 @@
 [
   {
+    "name": "Zenn",
+    "url": "https://zenn.dev/feed",
+    "url_parser": {
+      "type": "feed",
+      "args": {}
+    },
+    "meta_parser": {
+      "type": "general",
+      "args": {}  
+    }
+  },
+  {
     "name": "Amazon Web Service",
     "url": "https://aws.amazon.com/jp/blogs/aws/feed/",
     "url_parser": {
@@ -204,18 +216,6 @@
     }
   },
   {
-    "name": "AI SHIFT TECH BLOG",
-    "url": "https://www.ai-shift.co.jp/techblog/feed",
-    "url_parser": {
-      "type": "feed",
-      "args": {}
-    },
-    "meta_parser": {
-      "type": "general",
-      "args": {}
-    }
-  },
-  {
     "name": "Chatwork Creator's Note",
     "url": "https://creators-note.chatwork.com/feed",
     "url_parser": {
@@ -264,11 +264,16 @@
     }
   },
   {
-    "name": "Preferred Networks Research & Development Blog",
-    "url": "https://tech.preferred.jp/ja/feed/",
+    "name": "Preferred Networks",
+    "url": "https://www.preferred.jp/ja/blog/tech",
     "url_parser": {
-      "type": "feed",
-      "args": {}
+      "type": "selector",
+      "args": {
+        "selector": "a[class^='peer/thumb']",
+        "attribute": "href",
+        "base": "https://www.preferred.jp",
+        "exclude": []
+      }
     },
     "meta_parser": {
       "type": "general",

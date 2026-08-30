@@ -37,7 +37,7 @@ init_slack(config)
 
 
 WORKDIR: Path = Path(__file__).parent
-HTMLDIR: Path = WORKDIR / 'html'
+CACHEDIR: Path = WORKDIR / 'cache'
 
 
 def linux_safe(name: str) -> str:
@@ -54,7 +54,7 @@ def download(browser: Browser, cfg: SiteCfg) -> None:
     logger.info(f'  Found {len(urls)} urls')
 
     # Download HTML
-    site_dir: Path = HTMLDIR / cfg['name']
+    site_dir: Path = CACHEDIR / cfg['name']
     site_dir.mkdir(exist_ok=True, parents=True)
 
     # already downloaded
@@ -72,19 +72,35 @@ def download(browser: Browser, cfg: SiteCfg) -> None:
         page: Page = browser.new_page()
         page.goto(url)
 
-        m: Metadata = meta_parse(page, cfg['meta_parser'])
-        a: Article = Article(link=url, **m.__dict__)
+        m: Metadata = meta_parse(page)  # , cfg['meta_parser'])
 
-        html: Path = site_dir / f'{linux_safe(a.title)}.html'
+        html: Path = site_dir / f'{linux_safe(m.title)}.html'
         html.write_text(page.content(), encoding='utf-8')
 
-        dgst: ArticleDigest = digest(html)
-        send_discord(a.title, a.link, dgst)
-        send_slack(a.title, a.link, dgst)
+        dgst: ArticleDigest | None = digest(html)
+        if dgst is None:
+            logger.warning(f'  Failed to digest article: {url}')
+            continue
 
-        articles.append(a)
-        articles_json.write_text(json.dumps([a.__dict__ for a in articles], ensure_ascii=False, skipkeys=False))
+        send_discord(m.title, url, dgst)
+        send_slack(m.title, url, dgst)
 
+        articles.append(
+            Article(
+                title=m.title,
+                link=url,
+                description=m.description,
+                image=m.image,
+                summary=dgst.summary,
+                target=dgst.target,
+                stacks=dgst.stacks,
+            )
+        )
+        articles_json.write_text(
+            json.dumps([a.__dict__ for a in articles], ensure_ascii=False, skipkeys=False, indent=4)
+        )
+
+        page.close()
         sleep(5)  # polite crawling
 
 
@@ -97,8 +113,14 @@ def main():
         browser: Browser = p.chromium.launch(headless=True)
 
         for i, site_cfg in enumerate(sites):
-            logger.info(f'[{i + 1}/{len(sites)}]: {site_cfg["name"]}')
-            download(browser, SiteCfg(**site_cfg))
+            for n in range(100):
+                try:
+                    logger.info(f'[{i + 1}/{len(sites)}]: {site_cfg["name"]}')
+                    download(browser, SiteCfg(**site_cfg))
+                    break
+                except Exception as e:
+                    if n == 99:
+                        raise e
 
 
 if __name__ == '__main__':

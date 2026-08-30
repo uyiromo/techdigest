@@ -4,7 +4,7 @@ from __future__ import annotations
 import json
 from logging import Logger, getLogger
 
-from .common import Metadata, MetaParser, MetaParserType
+from .common import Metadata
 
 from playwright.sync_api import Locator, Page
 
@@ -33,19 +33,17 @@ def _get_content2(page: Page, name: str) -> str:
     )
 
 
-def meta_parse(page: Page, parser: MetaParser) -> Metadata:
-    meta: Metadata
-    match parser['type']:
-        case MetaParserType.General:
-            meta = _meta_parse_general(page)
-        case MetaParserType.General2:
-            meta = _meta_parse_general2(page)
-        case MetaParserType.LdJson:
-            meta = _meta_parse_ldjson(page)
-        case _:
-            raise ValueError(f'{parser["type"]} is UNKNOWN')
+def meta_parse(page: Page) -> Metadata:
+    meta: Metadata | None = None
 
-    if not meta.title:
+    for f in [_meta_parse_og, _meta_parse_og2, _meta_parse_meta, _meta_parse_ldjson]:
+        try:
+            meta = f(page)
+            break
+        except Exception:
+            continue
+
+    if (meta is None) or (not meta.title):
         raise RuntimeError(meta)
     else:
         pass
@@ -53,7 +51,7 @@ def meta_parse(page: Page, parser: MetaParser) -> Metadata:
     return meta
 
 
-def _meta_parse_general(page: Page) -> Metadata:
+def _meta_parse_og(page: Page) -> Metadata:
     return Metadata(
         title=page.title(),
         description=_get_content(page, 'og:description'),
@@ -61,12 +59,22 @@ def _meta_parse_general(page: Page) -> Metadata:
     )
 
 
-def _meta_parse_general2(page: Page) -> Metadata:
+def _meta_parse_og2(page: Page) -> Metadata:
     return Metadata(
         title=page.title(),
         description='',
         image=_get_content(page, 'og:image'),
     )
+
+def _meta_parse_meta(page: Page) -> Metadata:
+    return Metadata(
+        title=page.title(),
+        description=_get_content2(page, 'description'),
+        image='',
+    )
+
+
+
 
 
 def _meta_parse_twitter(page: Page) -> Metadata:

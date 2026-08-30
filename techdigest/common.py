@@ -13,17 +13,6 @@ class SiteCfg(TypedDict):
 
 
 #
-# I/F
-#
-@dataclass
-class Article:
-    title: str
-    link: str
-    description: str | None
-    image: str | None
-
-
-#
 # URL
 #
 class URLParserType(StrEnum):
@@ -74,3 +63,17 @@ class ArticleDigest(BaseModel):
             max_length=3,
         ),
     ]
+
+
+#
+# I/F
+#
+@dataclass
+class Article:
+    title: str
+    link: str
+    description: str | None
+    image: str | None
+    summary: str
+    target: str
+    stacks: list[str]
