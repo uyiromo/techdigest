@@ -1,17 +1,5 @@
 [
   {
-    "name": "Zenn",
-    "url": "https://zenn.dev/feed",
-    "url_parser": {
-      "type": "feed",
-      "args": {}
-    },
-    "meta_parser": {
-      "type": "general",
-      "args": {}  
-    }
-  },
-  {
     "name": "Amazon Web Service",
     "url": "https://aws.amazon.com/jp/blogs/aws/feed/",
     "url_parser": {
@@ -44,6 +32,30 @@
     },
     "meta_parser": {
       "type": "general2",
+      "args": {}
+    }
+  },
+  {
+    "name": "Zenn",
+    "url": "https://zenn.dev/feed",
+    "url_parser": {
+      "type": "feed",
+      "args": {}
+    },
+    "meta_parser": {
+      "type": "general",
+      "args": {}
+    }
+  },
+  {
+    "name": "Qiita",
+    "url": "https://qiita.com/popular-items/feed",
+    "url_parser": {
+      "type": "feed",
+      "args": {}
+    },
+    "meta_parser": {
+      "type": "general",
       "args": {}
     }
   },
