@@ -1,5 +1,17 @@
 [
   {
+    "name": "Github Star History",
+    "url": "https://rss.beehiiv.com/feeds/BbNzf9ozGZ.xml",
+    "url_parser": {
+      "type": "feed",
+      "args": {}
+    },
+    "meta_parser": {
+      "type": "general",
+      "args": {}
+    }
+  },
+  {
     "name": "Amazon Web Service",
     "url": "https://aws.amazon.com/jp/blogs/aws/feed/",
     "url_parser": {
