@@ -4,6 +4,7 @@ from logging import Logger, getLogger
 from pathlib import Path
 from time import sleep
 from typing import cast
+from uuid import uuid4
 
 from .common import ArticleDigest
 
@@ -46,6 +47,7 @@ def init_digest(config: dict) -> None:
     client = OpenAI(
         base_url=config['openai']['base_url'],
         api_key=config['openai']['api_key'],
+        default_headers={'x-opencode-session': str(uuid4())},
     )
     model = config['openai']['model']
 
