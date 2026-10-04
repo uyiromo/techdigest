@@ -62,7 +62,10 @@ def _extract_article(html: str) -> str:
     h.ignore_images = True
     h.ignore_emphasis = True
     h.body_width = 0
-    return h.handle(summary)
+    markdown: str = h.handle(summary)
+    if not markdown.strip():
+        raise RuntimeError('Failed to extract article body (empty)')
+    return markdown
 
 
 def digest(
