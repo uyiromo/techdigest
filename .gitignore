@@ -209,3 +209,6 @@ __marimo__/
 # techdigest
 techdigest.toml
 cache/
+
+# run lock
+.run.lock
