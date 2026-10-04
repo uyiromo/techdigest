@@ -4,7 +4,7 @@ from __future__ import annotations
 import json
 from logging import Logger, getLogger
 
-from .common import Metadata
+from .common import Metadata, MetaParser, MetaParserType
 
 from playwright.sync_api import Locator, Page
 
@@ -33,7 +33,13 @@ def _get_content2(page: Page, name: str) -> str:
     )
 
 
-def meta_parse(page: Page) -> Metadata:
+def meta_parse(page: Page, parser: MetaParser | None = None) -> Metadata:
+    if parser and parser['type'] == MetaParserType.Github:
+        meta = _meta_parse_github(page)
+        if not meta.title:
+            raise RuntimeError(meta)
+        return meta
+
     meta: Metadata | None = None
 
     for f in [_meta_parse_og, _meta_parse_og2, _meta_parse_meta, _meta_parse_ldjson]:
@@ -48,6 +54,18 @@ def meta_parse(page: Page) -> Metadata:
     else:
         pass
 
+    return meta
+
+
+def _meta_parse_github(page: Page) -> Metadata:
+    meta = _meta_parse_og(page)
+    title = meta.title
+    # "GitHub - owner/repo: 説明文 · GitHub" -> "GitHub - owner/repo"
+    if title.endswith(' · GitHub'):
+        title = title[: -len(' · GitHub')]
+    if title.startswith('GitHub - ') and ':' in title:
+        title = title.split(':', 1)[0]
+    meta.title = title
     return meta
 
 

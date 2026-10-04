@@ -1,5 +1,22 @@
 [
   {
+    "name": "Github Trending",
+    "url": "https://github.com/trending",
+    "url_parser": {
+      "type": "selector",
+      "args": {
+        "selector": "h2.h3.lh-condensed > a",
+        "attribute": "href",
+        "base": "https://github.com",
+        "exclude": []
+      }
+    },
+    "meta_parser": {
+      "type": "github",
+      "args": {}
+    }
+  },
+  {
     "name": "Github Star History",
     "url": "https://rss.beehiiv.com/feeds/BbNzf9ozGZ.xml",
     "url_parser": {

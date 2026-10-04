@@ -32,6 +32,7 @@ class MetaParserType(StrEnum):
     General = 'general'
     General2 = 'general2'
     LdJson = 'ld+json'
+    Github = 'github'
 
 
 class MetaParser(TypedDict):

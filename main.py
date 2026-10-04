@@ -88,7 +88,7 @@ def download(browser: Browser, cfg: SiteCfg) -> None:
         page: Page = browser.new_page()
         page.goto(url)
 
-        m: Metadata = meta_parse(page)  # , cfg['meta_parser'])
+        m: Metadata = meta_parse(page, cfg['meta_parser'])
 
         if is_excluded(m.title, url, m.description):
             page.close()
