@@ -27,6 +27,22 @@ model = ""
 # [discord]
 # token = "MTU*****"
 # channel_id = ""
+
+# [exclude]
+# title = [""]
+# link = [""]
+# description = [""]
+```
+
+## 除外設定
+
+`[exclude]` セクションで、`title` / `link` / `description` ごとに除外キーワードのリストを指定できます。いずれかのフィールドにキーワードが含まれる記事はスキップされます。
+
+```toml
+[exclude]
+title = ["PR", "広告"]
+link = ["/tag/"]
+description = ["アフィリエイト"]
 ```
 
 ## Slack 連携

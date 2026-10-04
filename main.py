@@ -39,6 +39,22 @@ init_slack(config)
 WORKDIR: Path = Path(__file__).parent
 CACHEDIR: Path = WORKDIR / 'cache'
 
+_exclude = config.get('exclude', {})
+EXCLUDE_TITLE: list[str] = _exclude.get('title', [])
+EXCLUDE_LINK: list[str] = _exclude.get('link', [])
+EXCLUDE_DESCRIPTION: list[str] = _exclude.get('description', [])
+
+
+def is_excluded(title: str, link: str, description: str | None) -> bool:
+    """部分一致したなら True"""
+    def _submatch(s: str | None, filter: list[str]) -> bool:  # noqa: A002
+        if not s:
+            return False
+        else:
+            return any(s in f for f in filter)
+
+    return _submatch(title, EXCLUDE_TITLE) or _submatch(link, EXCLUDE_LINK) or _submatch(description, EXCLUDE_DESCRIPTION)
+
 
 def linux_safe(name: str) -> str:
     return re.sub(r'[\\/*?:"<>|\x00-\x1f]', '_', name).strip('. ')[:100]
@@ -73,6 +89,10 @@ def download(browser: Browser, cfg: SiteCfg) -> None:
         page.goto(url)
 
         m: Metadata = meta_parse(page)  # , cfg['meta_parser'])
+
+        if is_excluded(m.title, url, m.description):
+            page.close()
+            continue
 
         html: Path = site_dir / f'{linux_safe(m.title)}.html'
         html.write_text(page.content(), encoding='utf-8')

@@ -11,3 +11,8 @@ model = ""
 # [discord]
 # token = "MTU*****"
 # channel_id = ""
+
+[exclude]
+title = []
+link = []
+description = []
