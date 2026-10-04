@@ -17,7 +17,8 @@ cp techdigest.toml.example techdigest.toml
 [openai]
 base_url = ""
 api_key = ""
-model = ""
+models = []
+# 例: models = ["model-a", "model-b"]
 
 # [slack]
 # app_token = "xapp-*****"

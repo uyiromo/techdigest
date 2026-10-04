@@ -38,18 +38,19 @@ PROMPT = """\
 """
 
 client: OpenAI | None = None
-model: str | None = None
+models: list[str] = []
 
 
 def init_digest(config: dict) -> None:
-    global client, model
+    global client, models
 
     client = OpenAI(
         base_url=config['openai']['base_url'],
         api_key=config['openai']['api_key'],
         default_headers={'x-opencode-session': str(uuid4())},
     )
-    model = config['openai']['model']
+    openai_cfg = config['openai']
+    models = list(openai_cfg['models'])
 
     return
 
@@ -71,25 +72,32 @@ def _extract_article(html: str) -> str:
 def digest(
     html_path: Path,
 ) -> ArticleDigest | None:
-    if not (client and model):
-        raise RuntimeError(f'LLM is not initialized: client="{client}", model="{model}"')
+    if not (client and models):
+        raise RuntimeError(f'LLM is not initialized: client="{client}", models="{models}"')
 
     # HTML をそのまま渡すと消費トークンが激しいので圧縮
     # e.g) 550,000 トークン => 1,500
     html: str = html_path.read_text(encoding='utf-8')
     markdown: str = _extract_article(html)
 
-    outlines_model = outlines.from_openai(client, model_name=model)
-    generator = outlines.Generator(outlines_model, output_type=ArticleDigest)
+    for model in models:
+        outlines_model = outlines.from_openai(client, model_name=model)
+        generator = outlines.Generator(outlines_model, output_type=ArticleDigest)
 
-    for attempt in range(10):
-        try:
-            result = cast(str, generator(PROMPT + markdown))
-            return ArticleDigest.model_validate_json(result)
-        except Exception as e:
-            logger.warning(f'  Attempt {attempt + 1} failed: {e}')
-            if attempt < 9:
-                sleep(5)
+        errors_400 = 0
+        for attempt in range(10):
+            try:
+                result = cast(str, generator(PROMPT + markdown))
+                return ArticleDigest.model_validate_json(result)
+            except Exception as e:
+                logger.warning(f'  Attempt {attempt + 1} ({model}) failed: {e}')
+                if getattr(e, 'status_code', None) == 400:
+                    errors_400 += 1
+                    if errors_400 >= 5:
+                        logger.warning(f'  400 error occurred 5 times, falling back from {model}')
+                        break
+                if attempt < 9:
+                    sleep(5)
 
-    # raise RuntimeError(f'Failed to digest after 10 attempts: {html_path}')
+    logger.error(f'  All models failed: {html_path}')
     return None
