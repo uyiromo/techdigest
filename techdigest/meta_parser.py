@@ -19,7 +19,7 @@ def _get_content(page: Page, prop: str) -> str:
     return _dehtml(
         page.locator(
             f'meta[property="{prop}"]',
-        ).first.get_attribute('content')
+        ).first.get_attribute('content', timeout=1000)
         or ''
     )
 
@@ -28,7 +28,7 @@ def _get_content2(page: Page, name: str) -> str:
     return _dehtml(
         page.locator(
             f'meta[name="{name}"]',
-        ).first.get_attribute('content')
+        ).first.get_attribute('content', timeout=1000)
         or ''
     )
 
@@ -50,7 +50,7 @@ def meta_parse(page: Page, parser: MetaParser | None = None) -> Metadata:
             continue
 
     if (meta is None) or (not meta.title):
-        raise RuntimeError(meta)
+        raise RuntimeError(f'Failed to parse metadata: {meta}')
     else:
         pass
 

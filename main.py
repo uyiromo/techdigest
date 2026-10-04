@@ -133,14 +133,18 @@ def main():
         browser: Browser = p.chromium.launch(headless=True)
 
         for i, site_cfg in enumerate(sites):
-            for n in range(100):
+            wait = 5
+            for n in range(10):
                 try:
                     logger.info(f'[{i + 1}/{len(sites)}]: {site_cfg["name"]}')
                     download(browser, SiteCfg(**site_cfg))
                     break
                 except Exception as e:
-                    if n == 99:
+                    if n == 9:
                         raise e
+                    logger.warning(f'  Failed: {e}. Retrying in {wait}s...')
+                    sleep(wait)
+                    wait = min(wait + 5, 30)
 
 
 if __name__ == '__main__':
