@@ -47,17 +47,51 @@ EXCLUDE_DESCRIPTION: list[str] = _exclude.get('description', [])
 
 def is_excluded(title: str, link: str, description: str | None) -> bool:
     """部分一致したなら True"""
+
     def _submatch(s: str | None, filter: list[str]) -> bool:  # noqa: A002
         if not s:
             return False
         else:
             return any(s in f for f in filter)
 
-    return _submatch(title, EXCLUDE_TITLE) or _submatch(link, EXCLUDE_LINK) or _submatch(description, EXCLUDE_DESCRIPTION)
+    return (
+        _submatch(title, EXCLUDE_TITLE) or _submatch(link, EXCLUDE_LINK) or _submatch(description, EXCLUDE_DESCRIPTION)
+    )
 
 
 def linux_safe(name: str) -> str:
-    return re.sub(r'[\\/*?:"<>|\x00-\x1f]', '_', name).strip('. ')[:100]
+    return re.sub(r'[\\/*?:"<>|\x00-\x1f]', '_', name).strip('. ')[:80]
+
+
+def _download_page(browser: Browser, cfg: SiteCfg, url: str, site_dir: Path) -> Article | None:
+    page: Page = browser.new_page()
+    page.goto(url)  # , wait_until='networkidle')
+
+    m: Metadata = meta_parse(page, cfg['meta_parser'])
+    html: Path = site_dir / f'{linux_safe(m.title)}.html'
+    html.write_text(page.content(), encoding='utf-8')
+    page.close()
+
+    if url == 'https://zenn.dev/hand_dot/articles/ecb391d4322330' or is_excluded(m.title, url, m.description):
+        return None
+
+    dgst: ArticleDigest | None = digest(html)
+    if dgst is None:
+        logger.warning(f'  Failed to digest article: {url}')
+        return None
+
+    send_discord(m.title, url, dgst)
+    send_slack(m.title, url, dgst)
+
+    return Article(
+        title=m.title,
+        link=url,
+        description=m.description,
+        image=m.image,
+        summary=dgst.summary,
+        target=dgst.target,
+        stacks=dgst.stacks,
+    )
 
 
 def download(browser: Browser, cfg: SiteCfg) -> None:
@@ -85,42 +119,26 @@ def download(browser: Browser, cfg: SiteCfg) -> None:
         if url in article_urls:
             continue
 
-        page: Page = browser.new_page()
-        page.goto(url)
+        # with retry
+        wait: int = 5
+        for _ in range(5):
+            try:
+                article: Article | None = _download_page(browser, cfg, url, site_dir)
+                if article:
+                    articles.append(article)
+                    articles_json.write_text(
+                        json.dumps([a.__dict__ for a in articles], ensure_ascii=False, skipkeys=False, indent=4)
+                    )
+                else:
+                    # Failed to download or excluded, skip silently (retry in next run)
+                    pass
 
-        m: Metadata = meta_parse(page, cfg['meta_parser'])
+                break
+            except Exception as e:
+                logger.warning(f'    Failed: {e}. Retrying in {wait}s...')
+                sleep(wait)
+                wait = min(wait + 5, 30)
 
-        if is_excluded(m.title, url, m.description):
-            page.close()
-            continue
-
-        html: Path = site_dir / f'{linux_safe(m.title)}.html'
-        html.write_text(page.content(), encoding='utf-8')
-
-        dgst: ArticleDigest | None = digest(html)
-        if dgst is None:
-            logger.warning(f'  Failed to digest article: {url}')
-            continue
-
-        send_discord(m.title, url, dgst)
-        send_slack(m.title, url, dgst)
-
-        articles.append(
-            Article(
-                title=m.title,
-                link=url,
-                description=m.description,
-                image=m.image,
-                summary=dgst.summary,
-                target=dgst.target,
-                stacks=dgst.stacks,
-            )
-        )
-        articles_json.write_text(
-            json.dumps([a.__dict__ for a in articles], ensure_ascii=False, skipkeys=False, indent=4)
-        )
-
-        page.close()
         sleep(5)  # polite crawling
 
 
@@ -133,18 +151,8 @@ def main():
         browser: Browser = p.chromium.launch(headless=True)
 
         for i, site_cfg in enumerate(sites):
-            wait = 5
-            for n in range(10):
-                try:
-                    logger.info(f'[{i + 1}/{len(sites)}]: {site_cfg["name"]}')
-                    download(browser, SiteCfg(**site_cfg))
-                    break
-                except Exception as e:
-                    if n == 9:
-                        raise e
-                    logger.warning(f'  Failed: {e}. Retrying in {wait}s...')
-                    sleep(wait)
-                    wait = min(wait + 5, 30)
+            logger.info(f'[{i + 1}/{len(sites)}]: {site_cfg["name"]}')
+            download(browser, SiteCfg(**site_cfg))
 
 
 if __name__ == '__main__':
